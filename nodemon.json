@@ -1,0 +1,6 @@
+{
+  "execMapComment": "When nodemon tried to run a js file, it uses sucrase-node instead of node",
+  "execMap": {
+    "js": "sucrase-node"
+  }
+}
