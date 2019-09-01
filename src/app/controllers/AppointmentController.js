@@ -7,10 +7,17 @@ import File from '../models/File';
 
 class AppointmentController {
   async index(req, res) {
+    const { page = 1 } = req.query;
+
     const appointments = await Appointment.findAll({
       where: { user_id: req.userId, canceled_at: null },
       order: ['date'],
       attributes: ['id', 'date'],
+      limit: 20,
+      // (1 - 1) * 20 = 0, then no appointment will be skipped
+      // (2 - 1) * 20 = 20, then will skip 20 appointments
+      // and so on...
+      offset: (page - 1) * 20,
       include: [
         {
           model: User,
