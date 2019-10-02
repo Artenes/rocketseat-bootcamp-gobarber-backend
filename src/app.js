@@ -2,6 +2,7 @@ import 'dotenv/config';
 
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 import * as Sentry from '@sentry/node';
 import 'express-async-errors';
 import Youch from 'youch';
@@ -21,6 +22,9 @@ class App {
 
   middlewares() {
     this.server.use(Sentry.Handlers.requestHandler());
+    // TODO In production adds origin for web and mobile apps
+    // this.server.use(cors({ origin: 'https://react-app-url.com' }));
+    this.server.use(cors());
     this.server.use(express.json());
     this.server.use(
       '/files',
